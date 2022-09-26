@@ -4,7 +4,7 @@ import com.openclassrooms.payMyBuddy.model.Customer;
 import com.openclassrooms.payMyBuddy.model.Transaction;
 import com.openclassrooms.payMyBuddy.repository.CustomerRepository;
 import com.openclassrooms.payMyBuddy.repository.TransactionRepository;
-import com.openclassrooms.payMyBuddy.service.TransactionService;
+import com.openclassrooms.payMyBuddy.service.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -13,13 +13,14 @@ import java.time.LocalDate;
 
 @Component
 public class TestRunner implements CommandLineRunner {
+
     @Autowired
-    private TransactionService transactionService;
+    private CustomerServiceImpl customerService;
+
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
     private TransactionRepository transactionRepository;
-
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,3 +38,4 @@ public class TestRunner implements CommandLineRunner {
                 new Transaction(null, "paiement jeans", 50.0, 0.1,LocalDate.of(2022,02,18),savedCustomer1,savedCustomer2));
     }
 }
+

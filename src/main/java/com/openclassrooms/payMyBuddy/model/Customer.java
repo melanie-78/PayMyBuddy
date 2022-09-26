@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,10 +15,11 @@ import java.util.Objects;
 @Table(name = "customer")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Customer{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="customerId")
     private Long customerId;
 
     @Column(name="firstname")
@@ -65,10 +65,5 @@ public class Customer {
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
         return Objects.equals(customerId, customer.customerId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(customerId);
     }
 }
