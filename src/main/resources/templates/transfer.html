@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="templateApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfer</title>
+</head>
+<body>
+<div layout:fragment="content1">
+
+<div class="container mt-4">
+
+  <div class="card">
+    <div class="card-header">Send Money
+      <td>
+        <a class="btn btn-success" th:href="@{/customer/formAddContact}">Add Connection</a>
+      </td>
+    </div>
+
+    <div class="mt-2" >
+      <td> Options </td>
+       <td>
+       <a class="btn btn-success" th:href="@{/transaction/formAddTransaction}">Add Transaction</a>
+       </td>
+       <td>
+        <a class="btn btn-success" th:href="@{/bankTransaction/formAddBankTransaction}"> Add Bank transaction</a>
+       </td>
+    </td>
+  </div>
+
+
+  <div class="card mt-4">
+    <div class="card-header">My Transactions</div>
+    <div class="card-body">
+      <table class ="table">
+        <thead>
+        <tr>
+          <th>Connections</th><th>Description</th><th>Amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="transaction:${listTransactions}">
+          <td th:text="${transaction.friend}"></td>
+          <td th:text="${transaction.description}"></td>
+          <td th:text="${transaction.amount}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</body>
+</html>

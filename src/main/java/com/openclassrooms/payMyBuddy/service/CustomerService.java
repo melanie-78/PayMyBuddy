@@ -1,8 +1,13 @@
 package com.openclassrooms.payMyBuddy.service;
 
-import org.springframework.stereotype.Service;
+import com.openclassrooms.payMyBuddy.dto.BankTransactionDto;
+import com.openclassrooms.payMyBuddy.dto.TransactionCustomerDto;
 
+import java.util.List;
 
-@Service
-public class CustomerService{
+public interface CustomerService {
+    List<BankTransactionDto> getBankTransactions(String email);
+    List<TransactionCustomerDto> getTransactionToCustomers(String email);
+    List<TransactionCustomerDto> getTransactionFromCustomers(String email);
 }
+

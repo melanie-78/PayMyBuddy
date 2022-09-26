@@ -1,19 +1,24 @@
 package com.openclassrooms.payMyBuddy.model;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @Table(name = "transaction")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transactionId")
     private Long transactionId;
 
     private String description;
@@ -24,17 +29,14 @@ public class Transaction {
     private Double transactionCost;
 
     @Column(name="created_at")
-    @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date createdAt;
+    private LocalDate createdAt;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,
-                    CascadeType.PERSIST})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "from_customer_id")
     private Customer fromCustomer;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,
-                    CascadeType.PERSIST})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "to_customer_id")
     private Customer friend;
 }
