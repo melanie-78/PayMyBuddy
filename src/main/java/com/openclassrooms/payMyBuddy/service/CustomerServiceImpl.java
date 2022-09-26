@@ -83,4 +83,12 @@ public class CustomerServiceImpl implements CustomerService{
         friends.add(newContact);
         customerRepository.saveAll(friends);
     }
+
+    @Override
+    public List<Customer> getFriends(String email) {
+        Customer byEmail = customerRepository.findByEmail(email)
+                .orElseThrow(()->new NoSuchElementException("The email "+email+" doesn't exist in database"));
+        List<Customer> byEmailFriends = byEmail.getFriends();
+        return byEmailFriends;
+    }
 }
