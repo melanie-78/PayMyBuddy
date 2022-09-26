@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="templateApp">
+<head>
+    <meta charset="UTF-8">
+    <title>FormAddContact</title>
+</head>
+
+<body>
+<div layout:fragment="content1">
+    <div class="col-md-6 offset-3">
+        <form method="post" th:action="@{/customer/save}" th:object="${friendRequestDto}">
+            <label>MyEmail</label>
+            <input class="form-control" type="text" th:field="*{myEmail}" placeholder="email">
+
+            <label>EmailFriend</label>
+            <input class="form-control" type="text" th:field="*{emailFriend}" placeholder="email Friend">
+
+            <div th:if="${errorResponse}">
+                <div class="text-danger" th:text="${errorResponse.errorMessage}"></div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
