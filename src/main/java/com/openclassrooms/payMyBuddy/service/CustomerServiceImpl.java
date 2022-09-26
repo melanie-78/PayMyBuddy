@@ -3,20 +3,27 @@ package com.openclassrooms.payMyBuddy.service;
 import com.openclassrooms.payMyBuddy.dto.BankTransactionDto;
 import com.openclassrooms.payMyBuddy.dto.TransactionCustomerDto;
 import com.openclassrooms.payMyBuddy.exception.AddContactException;
+import com.openclassrooms.payMyBuddy.exception.VerifyPasswordException;
 import com.openclassrooms.payMyBuddy.mapper.BankTransactionMapper;
 import com.openclassrooms.payMyBuddy.mapper.TransactionCustomerMapper;
 import com.openclassrooms.payMyBuddy.model.Customer;
 import com.openclassrooms.payMyBuddy.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService, UserDetailsService {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -24,6 +31,8 @@ public class CustomerServiceImpl implements CustomerService{
     private BankTransactionMapper bankTransactionMapper;
     @Autowired
     private TransactionCustomerMapper transactionMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -90,5 +99,33 @@ public class CustomerServiceImpl implements CustomerService{
                 .orElseThrow(()->new NoSuchElementException("The email "+email+" doesn't exist in database"));
         List<Customer> byEmailFriends = byEmail.getFriends();
         return byEmailFriends;
+    }
+
+    @Override
+    public Customer customerRegistration(String firstName, String lastName, String email, String password, String rePassword) throws VerifyPasswordException {
+        if(!password.equals(rePassword)){
+            throw new VerifyPasswordException("Passwords not match");
+        }else{
+            String hashedPWD= passwordEncoder.encode(password);
+
+            Customer customer = new Customer();
+            customer.setFirstName(firstName);
+            customer.setLastName(lastName);
+            customer.setBalance(0.0);
+            customer.setEmail(email);
+            customer.setPassword(hashedPWD);
+
+            Customer savedCustomer= customerRepository.save(customer);
+            return savedCustomer;
+        }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Customer customer = customerRepository.findByEmail(email)
+                .orElseThrow(()->new NoSuchElementException("The customer "+email+ " doesn't exist in database, please register"));
+        User user = new User(customer.getEmail(), customer.getPassword(), new ArrayList<>());
+
+        return user;
     }
 }

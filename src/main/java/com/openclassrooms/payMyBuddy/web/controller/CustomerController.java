@@ -21,6 +21,11 @@ public class CustomerController {
 
     private CustomerService customerService;
 
+    @GetMapping("/")
+    public String home(){
+        return"home";
+    }
+
     @GetMapping("/customer/transfer")
     public String getTransactionToCustomers(Model model, @RequestParam String email){
         try{

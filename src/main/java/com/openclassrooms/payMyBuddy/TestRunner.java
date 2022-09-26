@@ -16,7 +16,6 @@ public class TestRunner implements CommandLineRunner {
 
     @Autowired
     private CustomerServiceImpl customerService;
-
     @Autowired
     private CustomerRepository customerRepository;
     @Autowired
@@ -24,7 +23,13 @@ public class TestRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Customer savedCustomer1 = customerRepository.save(
+
+        customerService.customerRegistration("melanie", "adj", "adj@gmail.com","1234", "1234");
+        customerService.customerRegistration("luna", "adjoh", "luna@gmail.com", "2345", "2345");
+        customerService.customerRegistration("kylian", "ad", "ad@gmail.com","3456", "3456");
+        customerService.customerRegistration("franck", "tounga", "franck@gmail.com", "8888", "8888");
+
+        /*Customer savedCustomer1 = customerRepository.save(
                 new Customer(null,"melanie","Adjoh","adj@gmail.com", "1234", LocalDate.of(2022,02,18),100.0, null, null, null, null));
         Customer savedCustomer2 = customerRepository.save(
                 new Customer(null,"franck","Tounga","fr@gmail.com", "2345", LocalDate.of(2022,04,8),800.0,null,null,null,null));
@@ -35,7 +40,7 @@ public class TestRunner implements CommandLineRunner {
 
 
         transactionRepository.save(
-                new Transaction(null, "paiement jeans", 50.0, 0.1,LocalDate.of(2022,02,18),savedCustomer1,savedCustomer2));
+                new Transaction(null, "paiement jeans", 50.0, 0.1,LocalDate.of(2022,02,18),savedCustomer1,savedCustomer2));*/
     }
 }
 
