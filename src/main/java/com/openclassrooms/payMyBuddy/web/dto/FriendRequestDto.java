@@ -1,4 +1,4 @@
-package com.openclassrooms.payMyBuddy.web.controller.dto;
+package com.openclassrooms.payMyBuddy.web.dto;
 
 import lombok.Data;
 
