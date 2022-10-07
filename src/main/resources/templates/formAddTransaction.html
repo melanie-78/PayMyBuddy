@@ -13,9 +13,9 @@
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
         <form method="post" th:action="@{/transaction/pay}" th:object="${payRequestDto}">
-            <label>EmailSender</label>
+            <!--<label>EmailSender</label>
             <input type="text" class="form-control" th:field="*{emailSender}" placeholder="email Sender">
-
+-->
             <p>
                 <label>Email Receiver</label>
                 <select th:field ="*{emailReceiver}" class="form-control">

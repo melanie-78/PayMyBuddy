@@ -12,8 +12,8 @@
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
         <form method="post" th:action="@{/customer/save}" th:object="${friendRequestDto}">
-            <label>MyEmail</label>
-            <input class="form-control" type="text" th:field="*{myEmail}" placeholder="email">
+            <!--<label>MyEmail</label>
+            <input class="form-control" type="text" th:field="*{myEmail}" placeholder="email">-->
 
             <label>EmailFriend</label>
             <input class="form-control" type="text" th:field="*{emailFriend}" placeholder="email Friend">

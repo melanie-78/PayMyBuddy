@@ -76,10 +76,10 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
 
     @Override
     @Transactional
-    public void saveContact(String myEmail, String emailFriend) throws AddContactException {
+    public void saveContact(String emailFriend, String myEmail) throws AddContactException {
 
         Customer byEmail = customerRepository.findByEmail(myEmail)
-                .orElseThrow(()->new NoSuchElementException("The email "+myEmail+" doesn't exist in database "));
+                    .orElseThrow(() -> new NoSuchElementException("The email " + myEmail+ " doesn't exist in database "));
 
         Customer newContact = customerRepository.findByEmail(emailFriend)
                 .orElseThrow(() -> new AddContactException("The email "+emailFriend+" doesn't exist in database "));

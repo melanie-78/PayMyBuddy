@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,9 +29,9 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/transfer")
-    public String getTransactionToCustomers(Model model, @RequestParam String email){
+    public String getTransactionToCustomers(Model model, Principal principal){
         try{
-            List<TransactionCustomerDto> allTransactions = customerService.getTransactionFromCustomers(email);
+            List<TransactionCustomerDto> allTransactions = customerService.getTransactionFromCustomers(principal.getName());
             model.addAttribute("listTransactions", allTransactions);
         }catch(NoSuchElementException noSuchElementException){
             log.error(noSuchElementException.getMessage(),noSuchElementException );
@@ -44,9 +46,9 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public String save(Model model, @ModelAttribute("friendRequestDto") FriendRequestDto friendRequestDto){
+    public String save(Model model, @ModelAttribute("friendRequestDto") FriendRequestDto friendRequestDto, Principal principal){
         try {
-            customerService.saveContact(friendRequestDto.getMyEmail(), friendRequestDto.getEmailFriend());
+            customerService.saveContact(friendRequestDto.getEmailFriend(), principal.getName());
         }catch (NoSuchElementException noSuchElementException){
             log.error(noSuchElementException.getMessage(),noSuchElementException );
             ErrorResponse errorResponse = new ErrorResponse(noSuchElementException.getMessage());
