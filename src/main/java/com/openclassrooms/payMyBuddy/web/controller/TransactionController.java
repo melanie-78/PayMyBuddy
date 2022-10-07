@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -24,9 +26,9 @@ public class TransactionController {
 
 
     @GetMapping("/formAddTransaction")
-    public String formTransaction(Model model, @RequestParam() String email){
+    public String formTransaction(Model model, Principal principal){
         try{
-            List<Customer> friends = customerService.getFriends(email);
+            List<Customer> friends = customerService.getFriends(principal.getName());
             model.addAttribute("payRequestDto", new PayRequestDto());
             model.addAttribute("friends", friends );
         }catch (NoSuchElementException noSuchElementException){
@@ -36,9 +38,9 @@ public class TransactionController {
     }
 
     @PostMapping("/pay")
-    public String pay(Model model, @ModelAttribute("payRequestDto") PayRequestDto payRequestDto){
+    public String pay(Model model, @ModelAttribute("payRequestDto") PayRequestDto payRequestDto, Principal principal){
         try{
-            transactionService.makeTransaction(payRequestDto.getEmailSender(),payRequestDto.getAmount(),payRequestDto.getEmailReceiver(), payRequestDto.getDescription());
+            transactionService.makeTransaction(principal.getName(),payRequestDto.getAmount(),payRequestDto.getEmailReceiver(), payRequestDto.getDescription());
         }catch(NoSuchElementException noSuchElementException){
             log.error(noSuchElementException.getMessage(),noSuchElementException);
             ErrorResponse errorResponse = new ErrorResponse(noSuchElementException.getMessage());

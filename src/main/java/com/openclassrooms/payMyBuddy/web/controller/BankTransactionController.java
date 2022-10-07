@@ -4,7 +4,6 @@ import com.openclassrooms.payMyBuddy.exception.LowBalanceException;
 import com.openclassrooms.payMyBuddy.service.BankTransactionService;
 import com.openclassrooms.payMyBuddy.web.ErrorResponse;
 import com.openclassrooms.payMyBuddy.web.dto.BankTransactionWebDto;
-import groovy.util.logging.Slf4j;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.NoSuchElementException;
 
 @Controller
@@ -28,9 +28,9 @@ public class BankTransactionController {
     }
 
     @PostMapping("/saveBankTransaction")
-    public String AddBankTransaction(Model model,@ModelAttribute("bankTransactionDto") BankTransactionWebDto bankTransactionDto){
+    public String AddBankTransaction(Model model,@ModelAttribute("bankTransactionDto") BankTransactionWebDto bankTransactionDto, Principal principal){
         try{
-            bankTransactionService.makeBankTransaction(bankTransactionDto.getMyEmail(), bankTransactionDto.getBankTransactionType(), bankTransactionDto.getAmount(), bankTransactionDto.getDescription(), bankTransactionDto.getIban());
+            bankTransactionService.makeBankTransaction(principal.getName(), bankTransactionDto.getBankTransactionType(), bankTransactionDto.getAmount(), bankTransactionDto.getDescription(), bankTransactionDto.getIban());
         }catch(NoSuchElementException noSuchElementException){
             ErrorResponse errorResponse = new ErrorResponse(noSuchElementException.getMessage());
             model.addAttribute("errorResponse", errorResponse);
