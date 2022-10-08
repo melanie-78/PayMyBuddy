@@ -1,6 +1,7 @@
 package com.openclassrooms.payMyBuddy.web.controller;
 
 import com.openclassrooms.payMyBuddy.dto.TransactionCustomerDto;
+import com.openclassrooms.payMyBuddy.dto.TransactionDto;
 import com.openclassrooms.payMyBuddy.exception.AddContactException;
 import com.openclassrooms.payMyBuddy.service.CustomerService;
 import com.openclassrooms.payMyBuddy.web.ErrorResponse;
@@ -31,7 +32,7 @@ public class CustomerController {
     @GetMapping("/customer/transfer")
     public String getTransactionToCustomers(Model model, Principal principal){
         try{
-            List<TransactionCustomerDto> allTransactions = customerService.getTransactionFromCustomers(principal.getName());
+            List<TransactionDto> allTransactions = customerService.getAllTransactions(principal.getName());
             model.addAttribute("listTransactions", allTransactions);
         }catch(NoSuchElementException noSuchElementException){
             log.error(noSuchElementException.getMessage(),noSuchElementException );

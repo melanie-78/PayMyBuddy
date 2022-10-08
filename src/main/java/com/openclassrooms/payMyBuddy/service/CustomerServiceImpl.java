@@ -2,6 +2,7 @@ package com.openclassrooms.payMyBuddy.service;
 
 import com.openclassrooms.payMyBuddy.dto.BankTransactionDto;
 import com.openclassrooms.payMyBuddy.dto.TransactionCustomerDto;
+import com.openclassrooms.payMyBuddy.dto.TransactionDto;
 import com.openclassrooms.payMyBuddy.exception.AddContactException;
 import com.openclassrooms.payMyBuddy.exception.VerifyPasswordException;
 import com.openclassrooms.payMyBuddy.mapper.BankTransactionMapper;
@@ -72,6 +73,37 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         }).collect(Collectors.toList());
 
         return transactionFromDtoList;
+    }
+
+    @Override
+    public List<TransactionDto> getAllTransactions(String email) {
+        Customer byEmail = customerRepository.findByEmail(email)
+                .orElseThrow(()->new NoSuchElementException("This email doesn't exist in database"));
+
+        List<TransactionDto> list = new ArrayList<>();
+
+        List<TransactionDto> transactionFromDtoList = byEmail.getFromTransactions().stream().map(transaction -> {
+            TransactionDto transactionFromDto = transactionMapper.toTransactionDto(transaction);
+            return transactionFromDto;
+        }).collect(Collectors.toList());
+
+        list.addAll(transactionFromDtoList);
+
+        List<TransactionDto> transactionToDtoList = byEmail.getToTransactions().stream().map(transaction -> {
+            TransactionDto transactionToDto = transactionMapper.toTransactionDto(transaction);
+            return transactionToDto;
+        }).collect(Collectors.toList());
+
+        list.addAll(transactionToDtoList);
+
+        List<TransactionDto> bankTransactionToDtoList = byEmail.getBankTransactions()
+                .stream().map(bankTransaction -> {
+                    TransactionDto bankTransactionDto = bankTransactionMapper.toTransactionDto(bankTransaction);
+                    return bankTransactionDto;
+                }).collect(Collectors.toList());
+        list.addAll(bankTransactionToDtoList);
+
+        return list;
     }
 
     @Override
