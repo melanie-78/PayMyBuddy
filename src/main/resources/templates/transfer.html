@@ -41,7 +41,7 @@
         </thead>
         <tbody>
         <tr th:each="transaction:${listTransactions}">
-          <td th:text="${transaction.friend}"></td>
+          <td th:text="${transaction.label}"></td>
           <td th:text="${transaction.description}"></td>
           <td th:text="${transaction.amount}"></td>
         </tr>
