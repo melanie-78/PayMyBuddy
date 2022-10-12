@@ -6,11 +6,13 @@ import com.openclassrooms.payMyBuddy.model.Transaction;
 import com.openclassrooms.payMyBuddy.repository.CustomerRepository;
 import com.openclassrooms.payMyBuddy.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class TransactionServiceImpl implements TransactionService{
     private CustomerRepository customerRepository;
     private TransactionRepository transactionRepository;

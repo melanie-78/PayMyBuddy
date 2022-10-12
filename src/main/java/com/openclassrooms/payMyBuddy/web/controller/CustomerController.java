@@ -3,8 +3,11 @@ package com.openclassrooms.payMyBuddy.web.controller;
 import com.openclassrooms.payMyBuddy.dto.TransactionCustomerDto;
 import com.openclassrooms.payMyBuddy.dto.TransactionDto;
 import com.openclassrooms.payMyBuddy.exception.AddContactException;
+import com.openclassrooms.payMyBuddy.exception.VerifyPasswordException;
+import com.openclassrooms.payMyBuddy.model.Customer;
 import com.openclassrooms.payMyBuddy.service.CustomerService;
 import com.openclassrooms.payMyBuddy.web.ErrorResponse;
+import com.openclassrooms.payMyBuddy.web.dto.CustomerRequestDto;
 import com.openclassrooms.payMyBuddy.web.dto.FriendRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,11 @@ import java.util.NoSuchElementException;
 public class CustomerController {
 
     private CustomerService customerService;
+
+    @GetMapping("/app")
+    public String app(){
+        return"app";
+    }
 
     @GetMapping("/")
     public String home(){
@@ -62,5 +70,24 @@ public class CustomerController {
             return "formAddContact";
         }
         return "confirmAddContact";
+    }
+
+    @GetMapping("/formRegistration")
+    public String formRegistration(Model model){
+        model.addAttribute("customerRequestDto", new CustomerRequestDto());
+        return"formRegistration";
+    }
+
+    @PostMapping("/register")
+    public String customerRegistration(Model model, @ModelAttribute("customerRequestDto")CustomerRequestDto customerRequestDto){
+        try{
+            customerService.customerRegistration(customerRequestDto.getFirstName(), customerRequestDto.getLastName(), customerRequestDto.getEmail(), customerRequestDto.getPassword(), customerRequestDto.getRePassword());
+        }catch (VerifyPasswordException verifyPasswordException){
+            log.error(verifyPasswordException.getMessage(), verifyPasswordException);
+            ErrorResponse errorResponse= new ErrorResponse(verifyPasswordException.getMessage());
+            model.addAttribute("errorResponse", errorResponse);
+            return "formRegistration";
+        }
+        return "confirmRegistration";
     }
 }
