@@ -27,6 +27,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/").permitAll();
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
+        http.authorizeRequests().antMatchers("/app/**").permitAll();
+        http.authorizeRequests().antMatchers("/formRegistration/**").permitAll();
+        http.authorizeRequests().antMatchers("/register/**").permitAll();
         http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
         http.authorizeRequests().antMatchers("/customer/**", "/transaction/**", "/bankTransaction/**").authenticated();
         http.exceptionHandling().accessDeniedPage("/403");

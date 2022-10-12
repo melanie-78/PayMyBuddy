@@ -7,10 +7,12 @@ import com.openclassrooms.payMyBuddy.model.Customer;
 import com.openclassrooms.payMyBuddy.repository.BankTransactionRepository;
 import com.openclassrooms.payMyBuddy.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class BankTransactionServiceImpl implements BankTransactionService {
     private CustomerRepository customerRepository;
     private BankTransactionRepository bankTransactionRepository;

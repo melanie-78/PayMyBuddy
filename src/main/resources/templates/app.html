@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta charset="UTF-8">
+    <title>PayMyBuddy</title>
+</head>
+<body>
+<div class="container">
+    <td>
+        <h4>Welcome to PayMyBuddy Application, if you are a new customer, please register !!!</h4>
+    </td>
+    <td>
+        <a th:href="@{/formRegistration}">Register</a>
+    </td>
+    <td>
+        <h4> Or </h4>
+    </td>
+    <td>
+        <a th:href="@{/login}">Login</a>
+    </td>
+
+</div>
+</body>
+</html>
