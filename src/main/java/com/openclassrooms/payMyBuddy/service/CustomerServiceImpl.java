@@ -156,8 +156,6 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(()->new NoSuchElementException("The customer "+email+ " doesn't exist in database, please register"));
-        String ouioui = passwordEncoder.encode("ouioui");
-        boolean isSamePassword = passwordEncoder.matches("ouioui", customer.getPassword());
         User user = new User(customer.getEmail(), customer.getPassword(), new ArrayList<>());
 
         return user;
