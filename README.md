@@ -1,5 +1,11 @@
 # PayMyBuddy
 
+## Context
+
+The mission takes place at PayMyBuddy, a technological start-up aimed at providing banking and financial solutions. Next to afinding inconvenient money transactions, PayMyBuddy wants to develop simple applications in order to streamline procedures.
+
+The objective is therefore to create the prototype of a new java web application that would allow customers to transfer money to manage their finances or pay their friends.
+
 ## Technical:
 
 1. Framework: Spring Boot v2.7.0
@@ -17,7 +23,7 @@
 4. Use h2 database as configuration in application.properties
 
 ## Write Unit Test
-1. Create unit test and place in package com.nnk.springboot in folder test > java
+1. Create unit test and place in package com.openclassrooms.PayMyBuddy in folder test > java
 2. Execute unit test by the command mvn test
 
 ## uml
