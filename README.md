@@ -12,6 +12,9 @@ The objective is therefore to create the prototype of a new java web application
 2. Java 8
 3. Thymeleaf
 4. Bootstrap v.5.1.3
+5. Spring Data JPA
+6. Lombok
+7. Spring security
 
 
 ## Setup with Intellij IDE
