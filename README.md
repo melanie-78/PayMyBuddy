@@ -2,7 +2,7 @@
 
 ## Context
 
-The mission takes place at PayMyBuddy, a technological start-up aimed at providing banking and financial solutions. Next to a finding inconvenient money transactions, PayMyBuddy wants to develop simple applications in order to streamline procedures.
+The mission takes place at PayMyBuddy, a technological start-up aimed at providing banking and financial solutions. Following findings of inconvenient money transactions, PayMyBuddy wants to develop simple applications in order to streamline procedures.
 
 The objective is therefore to create the prototype of a new java web application that would allow customers to transfer money to manage their finances or pay their friends.
 
